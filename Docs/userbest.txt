@@ -1,0 +1,126 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+
+namespace CSf
+{
+
+    public class validate
+    {
+
+        Dictionary<string, string> dictionary = new Dictionary<string, string>();
+        string a, b,c;
+        int y;
+        public void menu()
+        {
+            do{
+            int opt;
+            Console.WriteLine("Enter ur choice:");
+            Console.WriteLine("1. Create user \n2. Login\n");
+            opt = Convert.ToInt32 (Console.ReadLine());
+            switch (opt)
+            {
+                case 1: user_reg(); break;
+                case 2: user_login(); break;
+                
+
+            }
+
+                Console.WriteLine("If you want to create login or login to account, Press 1:\n");
+                y=Convert.ToInt32(Console.ReadLine());
+
+            }while(y==1);
+            
+        }
+        
+        public void user_reg()
+        {
+            Console.WriteLine("Enter username:");
+            a = Console.ReadLine();
+            usernameValidate(a);
+            
+
+        }
+        
+        public void user_login()
+        {
+            Console.WriteLine("Enter username:");
+            string a = Console.ReadLine();
+            Console.WriteLine("Enter password:");
+            string b = Console.ReadLine();
+
+            if (dictionary.ContainsKey(a))
+            {
+                string value = dictionary[a];
+                if (value == b)
+                {
+                    Console.WriteLine("Login successful.....\n");
+                }
+                else {
+                    Console.WriteLine("Username or password is wrong...try again\n");
+                    user_login();
+                }
+            }
+
+        }
+        
+        public void usernameValidate(string m)
+        {
+
+
+            if (dictionary.ContainsKey(m))
+            {
+                Console.WriteLine("Username already exists...Try another name..");
+                user_reg();
+            }
+            else
+            {
+            loop:
+                Console.WriteLine("Enter password:");
+                b = Console.ReadLine();
+                if (b.Length <= 5)
+                {
+                    Console.WriteLine("Enter Confirm password:");
+                    c = Console.ReadLine();
+                }
+                else
+                {
+                    Console.WriteLine("Max len of pass is 5... Re-enter...");
+                    goto loop;
+                }
+                passwordValidate(m,b, c);
+                         
+            }
+
+        }
+
+        public void passwordValidate(string a,string n, string o)
+        {
+            if (n == o)
+            {
+                dictionary.Add(a, n);
+                Console.WriteLine("Login Created Successfully");
+            }
+            else
+                Console.WriteLine("Password mismatch...");
+                menu();
+        }
+    }
+
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+
+            validate obj = new validate();
+
+            obj.menu();
+
+            Console.ReadLine();
+        }
+       
+    }
+}

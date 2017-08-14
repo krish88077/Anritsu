@@ -1,0 +1,169 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+namespace loginDb
+{
+    public class validate
+    {
+        int x,y,count=0;
+        Dictionary<string, string> dictionary = new Dictionary<string, string>();
+
+        public void menu()
+        {
+            do
+            {
+                Console.Clear();
+                Console.WriteLine("1 Create new login \n 2 Login \n 3 List of Users ");
+                x=Convert.ToInt32(Console.ReadLine());
+                switch(x)
+                {
+                    case 1:
+                        register();
+                        break;
+
+                    case 2:
+                        loginCheck();
+                        break;
+                    case 3:
+                        userList();
+                        break;
+
+                    default:
+                        Console.WriteLine("Invalid Key");
+                        break;
+                }
+
+                Console.WriteLine("Press 1 to go to  menu");
+                y=Convert.ToInt32(Console.ReadLine());
+
+            }while(y==1);
+
+        }
+
+       
+        public void register()
+        {
+            string b, c;
+            Console.WriteLine("Enter username:");
+            string a = Console.ReadLine();
+            usernameValidate(a);
+            do
+            {
+                do
+                {
+                    Console.WriteLine("Enter password:");
+                    b = Console.ReadLine();
+                    if (b == a)
+                        Console.WriteLine("Username and password should not be same!!");
+                } while (b == a);
+                if (b.Length > 5)
+                    Console.WriteLine("Maximum pasword length is 5!!");
+            } while (b.Length > 5);
+                    Console.WriteLine("Enter Confirm password:");
+                    c = Console.ReadLine();
+            passwordValidate(b, c,a);
+            //dictionary.Add(a, b); 
+            
+        }
+
+        public void usernameValidate(string m)
+        {
+            int i;
+            string s = m;
+            char[] ch1 = s.ToCharArray();
+            char[] ch = {' ', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '-', '_', '=', '+', '[', ']', '{', '}', '|', ';', ':', '<', '>', '?', '/' };
+            if (m.Length > 20)
+            {
+                Console.WriteLine("Maximum length of user name should be 20");
+                register();
+            }
+            for(i=0;i<s.Length;i++)
+            {
+            bool b = s.Contains(ch[i]);
+           
+            if (b == true)
+            {
+                Console.WriteLine("Username should contain only alphanumerics");
+                register();
+                break;
+            }
+            }
+            if (count == 0)
+            {
+                count++;
+            }
+            else
+            {
+                if (dictionary.ContainsKey(m))
+                {
+                    Console.WriteLine("Username already exists!!");
+                    register();
+                }
+            }
+
+        }
+
+        public void passwordValidate(string p, string q,string r)
+        {
+            if (p == q)
+            {
+                Console.WriteLine("Login Created Successfully!!");
+                dictionary.Add(r, p);
+            }
+            else
+            {
+                Console.WriteLine("Password mismatched!!Re-Enter the data!!");
+                register();
+            }
+        }
+
+        public void loginCheck()
+        {
+            Console.WriteLine("Enter username:");
+            string id = Console.ReadLine();
+           
+            loginValidate(id);
+        }
+
+        public void loginValidate(string id)
+        {
+            if (dictionary.ContainsKey(id))
+            {
+                Console.WriteLine("Enter password:");
+                string pw = Console.ReadLine();
+                if (pw == dictionary[id])
+                {
+                    Console.WriteLine("Login Success!!");
+                }
+                else
+                {
+                    Console.WriteLine("Wrong Password!!");
+                }
+            }
+            else
+            {
+                Console.WriteLine("Invalid User!! Please Register");
+                Console.ReadLine();
+                menu();
+            }
+        }
+
+        public void userList()
+        { 
+
+        }
+    }
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            validate obj=new validate();
+            obj.menu();
+            
+         }
+    }
+}
+ 

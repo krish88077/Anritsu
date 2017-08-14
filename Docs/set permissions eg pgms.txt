@@ -1,0 +1,170 @@
+
+            //string path = @"E:\Database.xlsx";
+            //FileSecurity par = File.GetAccessControl(path);
+            //par.SetAccessRuleProtection(true,false);
+            //AuthorizationRuleCollection rules = par.GetAccessRules(true,true, typeof (System.Security.Principal.NTAccount));
+
+            //foreach (AuthorizationRule rule in rules)
+            //{
+            //if(rule is AccessRule)
+            //    {
+            //        par.RemoveAccessRule((FileSystemAccessRule)rule);
+            //    }
+            //}
+
+            //par.AddAccessRule(new FileSystemAccessRule _("Administrators", FileSystemRights.FullControl,AccessControlType.Allow));
+            //par.AddAccessRule(new FileSystemAccessRule _("TANDVA0020\Users", FileSystemRights.Modify, AccessControlType.Deny));
+            //File.SetAccessControl(path,par);
+
+
+
+
+
+
+
+
+           // string path = @"E:\Database.xlsx";
+           // Console.WriteLine("Adding access control entry for "+ path);
+             
+           // AddFileSecurity(path, @"TANDVA0020\Users", FileSystemRights.ReadData, AccessControlType.Allow);
+           // public static void AddFileSecurity(string fileName, string account,
+           // FileSystemRights rights, AccessControlType controlType)
+           // {
+           // FileSecurity fs = File.GetAccessControl(fileName);
+           //     fs.AddAccessRule(new FileSystemAccessRule(account,rights,controlType));
+           //     File.SetAccessControl(fileName,fs);
+           // }
+
+           ////Console.WriteLine("Done...");
+
+
+
+
+
+
+
+
+
+
+*************Without errors*****************
+
+
+
+
+
+
+ try
+            {
+                string fileName = @"E:\ttt.txt";
+
+                Console.WriteLine("Adding access control entry for "
+                    + fileName);
+
+                // Add the access control entry to the file. 
+                AddFileSecurity(fileName, @"TANDVA0020\Users",
+                    FileSystemRights.Modify , AccessControlType.Allow);
+
+                Console.WriteLine("Removing access control entry from "
+                    + fileName);
+
+                // Remove the access control entry from the file. 
+                //RemoveFileSecurity(fileName, @"TANDVA0020\Syaam Krishnaa S",
+                //    FileSystemRights.ReadData, AccessControlType.Allow);
+
+                Console.WriteLine("Done.");
+                Console.ReadLine();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+            Console.ReadLine();
+        }
+
+        // Adds an ACL entry on the specified file for the specified account. 
+        public static void AddFileSecurity(string fileName, string account,
+            FileSystemRights rights, AccessControlType controlType)
+        {
+
+
+            // Get a FileSecurity object that represents the 
+            // current security settings. 
+            FileSecurity fSecurity = File.GetAccessControl(fileName);
+
+            // Add the FileSystemAccessRule to the security settings. 
+            fSecurity.AddAccessRule(new FileSystemAccessRule(account,
+                rights, controlType));
+
+            // Set the new access settings. 
+            File.SetAccessControl(fileName, fSecurity);
+
+        }
+
+        // Removes an ACL entry on the specified file for the specified account. 
+        //public static void RemoveFileSecurity(string fileName, string account,
+        //    FileSystemRights rights, AccessControlType controlType)
+        //{
+
+        //    // Get a FileSecurity object that represents the 
+        //    // current security settings. 
+        //    FileSecurity fSecurity = File.GetAccessControl(fileName);
+
+        //    // Remove the FileSystemAccessRule from the security settings. 
+        //    fSecurity.RemoveAccessRule(new FileSystemAccessRule(account,
+        //        rights, controlType));
+
+        //    // Set the new access settings. 
+        //    File.SetAccessControl(fileName, fSecurity); 
+ 
+        //}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+string dirPath = @"E:\ttt.txt";
+            string userName = "user";
+
+            FileSystemRights rights = FileSystemRights.Read;
+
+            FileSystemAccessRule accessRule = new FileSystemAccessRule(userName, rights,
+                                        InheritanceFlags.None,
+                                        PropagationFlags.NoPropagateInherit,
+                                        AccessControlType.Allow);
+
+            DirectoryInfo dirInfo = new DirectoryInfo(dirPath);
+            DirectorySecurity dirSecurity = dirInfo.GetAccessControl(AccessControlSections.Access);
+
+            bool result = false;
+            dirSecurity.ModifyAccessRule(AccessControlModification.Add, accessRule, out result);
+            if (result)
+            {
+                accessRule = new FileSystemAccessRule(userName, rights,
+                                        InheritanceFlags.ContainerInherit | InheritanceFlags.ObjectInherit,
+                                        PropagationFlags.InheritOnly,
+                                        AccessControlType.Allow);
+
+                dirSecurity.ModifyAccessRule(AccessControlModification.Add, accessRule, out result);
+                if (result)
+                {
+                    dirInfo.SetAccessControl(dirSecurity);
+                }
+            }

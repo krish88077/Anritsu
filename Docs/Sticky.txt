@@ -1,0 +1,128 @@
+username<10
+alphanumerics
+no spl char
+user!=pass
+passlen<5
+pass n cnfrm pass mismatch
+invalid user
+already existing user
+list users
+
+
+
+
+/passwod lnth 5
+/user n pass not same
+/user not registered
+/password mismatch
+/invalid user goto menu
+
+/list the users
+/clrscr()
+/avoid goto use loop
+/usname no spl char
+/usname len 10
+/filestreams
+/no spl char
+/shorten cndition for spl char
+/avoid recursive func
+
+/invalid key
+/file op==append, fetch n start
+/store in excel
+/create excel fields
+
+
+
+
+/no replace 
+/list same user while deleting(same user not allowed to create login)
+commit---use objects instead of array
+
+
+
+
+/3 options deleter restore enter details
+
+/delete more entries
+
+/restore= disp del acc
+/add timestamp on restore
+/delete old n save 
+
+/ask undo while deleting
+
+
+
+mid pgm generate
+set number coloumn property
+
+
+
+when null spaces is found terminates
+
+date column in 5 dig numbers 
+
+
+*************EXCEL ***********************
+/create
+/open
+/write
+/save
+/saveas
+/password
+/file existance
+/close
+/read
+/append
+
+/delete entry
+/copy sheet
+/copy cells
+/copy workbook
+/copy cells btwn wb
+/copy between worksheets
+/search
+modify
+
+add delete insert copy row/col
+formulas
+
+x filters
+x permissions
+
+production proj
+
+search n list
+final commit
+*********************************
+
+
+
+
+
+
+SCDMA_suite_execution,Devpmt_complete,Target_relse_date,Status,JIRA_issues_fxd,Created_by,Patch_loc,Patch_depndncy,Tetcases_need,Bug,Comment
+
+
+
+
+name						cpu   monitor
+kanimozhi                 15	15
+syaam krishnaa			 20   18
+neha						17		14
+shruthi					19		19
+manivannan				16		16
+amar						13		17
+dinesh						14		20
+shanmugapriya			18		13
+vinumala					21		21
+
+
+
+
+************wpf error topics*********
+autocom comb box sql
+selectedindexchanged listbox
+mdi
+menu control

@@ -1,0 +1,23 @@
+create:
+
+   Excel.Workbook newWorkbook = this.Application.Workbooks.Add();
+
+open:
+
+  this.Application.Workbooks.Open(@"C:\Test\YourWorkbook.xlsx");
+
+close:
+
+ Globals.ThisWorkbook.Close(false);
+///
+object fileName = "NewWorkbook.xlsx";
+            Excel.Workbook workbook = this.Application.Workbooks.get_Item(fileName);
+            workbook.Close(false);
+
+save:
+
+ this.Save();
+
+ this.SaveAs(@"C:\Book1.xml", missing,
+                missing, missing, missing, missing, Excel.XlSaveAsAccessMode.xlNoChange,
+                missing, missing, missing, missing, missing);

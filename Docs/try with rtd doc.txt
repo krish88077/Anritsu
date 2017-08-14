@@ -1,0 +1,166 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using Microsoft.Office.Interop.Excel;
+using Excel = Microsoft.Office.Interop.Excel;
+using Microsoft.Office.Core;
+using System.IO;
+
+namespace Practice
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            /****************Create application**********************/
+            int choice, row = 2, i = 1;
+            Workbook wb;
+            Worksheet ws;
+            Microsoft.Office.Interop.Excel.Application prac = new Microsoft.Office.Interop.Excel.Application();
+            if (prac == null)
+            {
+                Console.WriteLine("Excel cant be started...");
+                return;
+            }
+
+            if (!System.IO.File.Exists(@"E:\RTD Patch Release Register.xlsx"))
+            {
+
+                 wb = prac.Workbooks.Add(XlWBATemplate.xlWBATWorksheet);
+                 ws = (Worksheet)wb.Worksheets[1];
+            
+            }
+            else
+            {
+                prac.Visible = true;
+
+                 wb = prac.Workbooks.Add(@"E:\RTD Patch Release Register.xlsx");
+                 ws = (Worksheet)wb.Worksheets[1];
+                 ws = (Excel.Worksheet)wb.Worksheets[1];
+
+                 ((Excel.Worksheet)wb.Sheets["RTD Patch Releases - CLOSED"]).Activate();
+
+
+                 ws = (Excel.Worksheet)wb.ActiveSheet;
+ 
+       
+            }
+                
+
+                if (ws == null)
+                {
+                    Console.WriteLine("worksheet cant be started...");
+                    return;
+                }
+
+                /***************Open existing file and read***********************/
+                string Path = @"E:\RTD Patch Release Register.xlsx";
+                Excel.Application app = new Application();
+                Excel.Workbook workbook = app.Workbooks.Open(Path, 0, true, 5, "", "", true, Excel.XlPlatform.xlWindows, "\t", false, false, 0, true, 1, 0);
+                Excel.Worksheet workSheet = (Excel.Worksheet)workbook.ActiveSheet;
+
+
+            workSheet = (Excel.Worksheet)wb.Worksheets[1];
+            ((Excel.Worksheet)wb.Sheets["RTD Patch Releases - CLOSED"]).Activate();
+            workSheet = (Excel.Worksheet)wb.ActiveSheet;
+
+
+                int serial_num = 1;
+                int rowIndex = 3;
+
+                try
+                {
+
+                    Console.WriteLine("USER     Username, Name, Password, Age, Mobno, MID");
+                    while (((Excel.Range)workSheet.Cells[rowIndex, 1]).Value2 != null)
+                    {
+                        string Patch_name = ((Excel.Range)workSheet.Cells[rowIndex, 1]).Value2.ToString();
+                        string Brief_descrp = ((Excel.Range)workSheet.Cells[rowIndex, 2]).Value2.ToString();
+                        string Patch_Priority = ((Excel.Range)workSheet.Cells[rowIndex, 3]).Value2.ToString();
+                        string Customer = ((Excel.Range)workSheet.Cells[rowIndex, 4]).Value2.ToString();
+                        string RTD_Comp_affect = ((Excel.Range)workSheet.Cells[rowIndex, 5]).Value2.ToString();
+                        string RTD_Db_Ver = ((Excel.Range)workSheet.Cells[rowIndex, 6]).Value2.ToString();
+
+                        string Target_relse_date = ((Excel.Range)workSheet.Cells[rowIndex, 9]).Value2.ToString();
+                        string Status = ((Excel.Range)workSheet.Cells[rowIndex, 10]).Value2.ToString();
+                        string JIRA_issues_fxd = ((Excel.Range)workSheet.Cells[rowIndex, 11]).Value2.ToString();
+                        string Created_by = ((Excel.Range)workSheet.Cells[rowIndex, 12]).Value2.ToString();
+
+
+                        Console.WriteLine(" {0} : {1}  ,{2}  ,{3}  ,{4}  ,{5}, {6} ,{7}  ,{8}  ,{9}, {10} ", serial_num, Patch_name, Brief_descrp, Patch_Priority, Customer, RTD_Comp_affect, RTD_Db_Ver, Target_relse_date, Status, JIRA_issues_fxd, Created_by);
+                        serial_num++;
+                        rowIndex++;
+                    }
+
+                }
+                catch (Exception e)
+                {
+                    prac.Quit();
+                    Console.WriteLine(e.Message);
+                }
+
+                /****************Get user details**(append)********************/
+
+                row = rowIndex;
+                do
+                {
+                    Console.WriteLine("Enter username");
+                    ws.Cells[row, 1].Value2 = Console.ReadLine();
+                    Console.WriteLine("Enter name");
+                    ws.Cells[row, 2].Value2 = Console.ReadLine();
+                    Console.WriteLine("Enter password");
+                    ws.Cells[row, 3].Value2 = Console.ReadLine();
+                    Console.WriteLine("Enter age");
+                    ws.Cells[row, 4].Value2 = Console.ReadLine();
+                    Console.WriteLine("Enter mobileno");
+                    ws.Cells[row, 5].Value2 = Console.ReadLine();
+                    Console.WriteLine("Enter mId");
+                    ws.Cells[row, 6].Value2 = Console.ReadLine();
+                    row++;
+                    Console.WriteLine(i + " user added..\nPress 1 to add user or Press 2 to save...");
+                    i++;
+                    choice = Convert.ToInt32(Console.ReadLine());
+                    Console.Clear();
+                } while (choice == 1);
+
+                wb.SaveAs(@"E:\RTD Patch Release Register.xlsx", Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, XlSaveAsAccessMode.xlExclusive, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing);
+                //prac.ActiveWorkbook.Save();
+
+                /****************Search and delete entry********************/
+
+                Console.WriteLine("Enter name to search");
+                string searchName = Console.ReadLine();
+                row = 2;
+                for (int search = 1; search <= serial_num; search++)
+                {
+                    if (ws.Cells[row, 1].Value2 == searchName)
+                    {
+                        Console.WriteLine("User Exists");
+                        Console.WriteLine("USER     Username, Name, Password, Age, Mobno, MID");
+                        for (int s = 1; s <= 6; s++)
+                        {
+
+                            Console.Write(ws.Cells[row, s].Value2 + "   ");
+                        }
+                        Console.WriteLine("\nDelete? press 1...");
+                        int y = Convert.ToInt32(Console.ReadLine());
+                        if (y == 1)
+                        {
+                            Excel.Range range;
+                            range = (Excel.Range)ws.Application.Rows[row, Type.Missing];
+                            range.Select();
+                            range.Delete(Excel.XlDirection.xlUp);
+                        }
+                        //wb.SaveAs(@"E:\Database.xlsx", Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, XlSaveAsAccessMode.xlExclusive, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing);
+                        prac.ActiveWorkbook.Save();
+                        //prac.Quit();
+                        Console.ReadLine();
+                        break;
+                    }
+                    row++;
+                }
+                Console.ReadLine();
+            }
+        }
+    }

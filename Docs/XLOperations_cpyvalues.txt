@@ -1,0 +1,120 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using Microsoft.Office.Interop.Excel;
+using Excel = Microsoft.Office.Interop.Excel;
+using Microsoft.Office.Core;
+using System.IO;
+
+namespace Practice
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            /*******************Betweenworkbooks*************************************/
+            Excel.Application excelApplication = new Excel.Application();
+            string srcPath;
+            string destPath;
+
+            srcPath = @"E:\\z\\from.xlsx";
+            Excel.Workbook srcworkBook = excelApplication.Workbooks.Open(srcPath);
+            Excel.Worksheet srcworkSheet = srcworkBook.Worksheets.get_Item(1);
+
+            destPath = @"E:\\z\\to.xlsx";
+            Excel.Workbook destworkBook = excelApplication.Workbooks.Open(destPath, 0, false);
+            Excel.Worksheet destworkSheet = destworkBook.Worksheets.get_Item(1);
+
+            Excel.Range from = srcworkSheet.Range["A6:F7"];
+            Excel.Range to = destworkSheet.Range["A9:F10"];
+
+            // if you use 2 instances of excel, this will not work
+            from.Copy(to);
+
+            destworkBook.SaveAs("E:\\z\\to " + "1" + ".xlsx");
+            Console.WriteLine("Copied....");
+            Console.ReadLine();
+            destworkBook.Close(true, null, null);
+            srcworkBook.Close(false, null, null);
+            excelApplication.Quit();
+            /********************************************************/
+
+
+
+            /**********sameworkbook**************sameworksheet********************************/
+         /*   Excel.Application excelApplication = new Excel.Application();
+            string srcPath;
+            string destPath;
+
+            srcPath = @"E:\\z\\from.xlsx";
+            Excel.Workbook srcworkBook = excelApplication.Workbooks.Open(srcPath);
+            Excel.Worksheet srcworkSheet = srcworkBook.Worksheets.get_Item(1);
+
+            destPath = @"E:\\z\\to.xlsx";
+            Excel.Workbook destworkBook = excelApplication.Workbooks.Open(destPath, 0, false);
+            Excel.Worksheet destworkSheet = destworkBook.Worksheets.get_Item(1);
+
+            Excel.Range from = srcworkSheet.Range["A6:F7"];
+            Excel.Range to = srcworkSheet.Range["A19:F20"];
+
+            // if you use 2 instances of excel, this will not work
+            from.Copy(to);
+
+            srcworkBook.SaveAs("E:\\z\\from " + "1" + ".xlsx");
+            Console.WriteLine("Copied....");
+            Console.ReadLine();
+            destworkBook.Close(true, null, null);
+            srcworkBook.Close(false, null, null);
+            excelApplication.Quit();
+            /********************************************************/
+
+
+
+	/**********sameworkbook**************differentworksheet********************************/
+            Excel.Application excelApplication = new Excel.Application();
+            string srcPath;
+
+            srcPath = @"E:\\z\\from.xlsx";
+            Excel.Workbook srcworkBook = excelApplication.Workbooks.Open(srcPath);
+            Excel.Worksheet srcworkSheet = srcworkBook.Worksheets.get_Item(1);
+
+            Microsoft.Office.Interop.Excel.Worksheet ws2 =
+                       (Microsoft.Office.Interop.Excel.Worksheet)srcworkBook.Sheets.Add();
+            ws2.Name = "secsheet";
+            Microsoft.Office.Interop.Excel.Worksheet ws3 =
+                          (Microsoft.Office.Interop.Excel.Worksheet)srcworkBook.Sheets.Add();
+            ws3.Name = "trdsheet";
+            Microsoft.Office.Interop.Excel.Worksheet ws4 =
+                          (Microsoft.Office.Interop.Excel.Worksheet)srcworkBook.Sheets.Add();
+            ws4.Name = "frthsheet";
+            Microsoft.Office.Interop.Excel.Worksheet ws5 =
+                          (Microsoft.Office.Interop.Excel.Worksheet)srcworkBook.Sheets.Add();
+            ws5.Name = "fifsheet";
+
+            Excel.Range from = srcworkSheet.Range["A6:F7"];
+            Excel.Range to = ws2.Range["A9:F10"];
+            from.Copy(to);
+            Excel.Range from1 = srcworkSheet.Range["A2:B2"];
+            Excel.Range to1 = ws3.Range["A11:B11"];
+            from1.Copy(to1);
+            Excel.Range from2 = srcworkSheet.Range["A3:C3"];
+            Excel.Range to2 = ws4.Range["A12:C12"];
+            from2.Copy(to2);
+            Excel.Range from3 = srcworkSheet.Range["A4:D4"];
+            Excel.Range to3 = ws5.Range["A13:D13"];
+            from3.Copy(to3);
+
+            srcworkBook.SaveAs("E:\\z\\from1.xlsx");
+            Console.WriteLine("sheet added....");
+            Console.ReadLine();
+
+            srcworkBook.Close(false, null, null);
+            excelApplication.Quit();
+            /********************************************************/
+
+
+            
+        }
+    }
+}

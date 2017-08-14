@@ -1,0 +1,324 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using Microsoft.Office.Interop.Excel;
+using Excel = Microsoft.Office.Interop.Excel;
+using Microsoft.Office.Core;
+using System.IO;
+
+namespace Practice
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+
+            /****************Create application**********************/
+            int choice, row = 2;
+            Workbook wb;
+            Worksheet ws;
+            Microsoft.Office.Interop.Excel.Application prac = new Microsoft.Office.Interop.Excel.Application();
+            if (prac == null)
+            {
+                Console.WriteLine("Excel cant be started...");
+                return;
+            }
+
+            if (!System.IO.File.Exists(@"E:\Database.xlsx"))
+            {
+
+                 wb = prac.Workbooks.Add(XlWBATemplate.xlWBATWorksheet);
+                 ws = (Worksheet)wb.Worksheets[1];
+                
+                /**************Set sheet designs************************/
+                 ws.Cells[1, 1].Value2 = "Username";
+                 ws.Cells[1, 2].Value2 = "Name";
+                 ws.Cells[1, 3].Value2 = "Password";
+                 ws.Cells[1, 4].Value2 = "Age";
+                 ws.Cells[1, 5].Value2 = "Contact";
+                 ws.Cells[1, 6].Value2 = "MID";
+                 ws.get_Range("A1", "F1").Font.Bold = true;
+                 ws.get_Range("A2", "z100").Font.Italic = true;
+                 ws.get_Range("A1", "F1").HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter;
+                 ws.Cells[1, 1].ColumnWidth = 20;
+                 ws.Cells[1, 2].ColumnWidth = 20;
+                 ws.Cells[1, 3].ColumnWidth = 15;
+                 ws.Cells[1, 4].ColumnWidth = 5;
+                 ws.Cells[1, 5].ColumnWidth = 15;
+                 ws.Cells[1, 6].ColumnWidth = 5;
+                 //ws.Cells[1, 6].RowHeight = 25;
+                 ws.Rows.RowHeight = 20;
+            }
+            else
+            {
+                prac.Visible = true;
+                wb = prac.Workbooks.Add(@"E:\Database.xlsx");
+                ws = (Excel.Worksheet)wb.Worksheets[1];
+                ((Excel.Worksheet)wb.Sheets["Sheet1"]).Activate();
+                ws = (Excel.Worksheet)wb.ActiveSheet;
+
+
+                 /***************Open existing file and read***********************/
+
+                 string Path = @"E:\Database.xlsx";
+                 Excel.Application app = new Application();
+                 Excel.Workbook workbook = app.Workbooks.Open(Path, 0, true, 5, "", "", true, Excel.XlPlatform.xlWindows, "\t", false, false, 0, true, 1, 0);
+
+                 Excel.Worksheet workSheet = (Excel.Worksheet)workbook.ActiveSheet;
+                 workSheet = (Excel.Worksheet)wb.Worksheets[1];
+                 ((Excel.Worksheet)wb.Sheets["Sheet1"]).Activate();
+                 workSheet = (Excel.Worksheet)wb.ActiveSheet;
+
+
+                 int serial_num = 1;
+                 int rowIndex = 2;
+
+                 if (((Excel.Range)workSheet.Cells[rowIndex, 1]).Value2 != null)
+                     Console.WriteLine("USER     Username, Name, Password, Age, Mobno, MID");
+
+                 while (((Excel.Range)workSheet.Cells[rowIndex, 1]).Value2 != null)
+                 {
+                     string Username = ((Excel.Range)workSheet.Cells[rowIndex, 1]).Value2.ToString();
+                     string Name = ((Excel.Range)workSheet.Cells[rowIndex, 2]).Value2.ToString();
+                     string Password = ((Excel.Range)workSheet.Cells[rowIndex, 3]).Value2.ToString();
+                     string Age = ((Excel.Range)workSheet.Cells[rowIndex, 4]).Value2.ToString();
+                     string Mobno = ((Excel.Range)workSheet.Cells[rowIndex, 5]).Value2.ToString();
+                     string MID = ((Excel.Range)workSheet.Cells[rowIndex, 6]).Value2.ToString();
+
+                     Console.WriteLine(" {0} : {1}  ,{2}  ,{3}  ,{4}  ,{5}, {6} ", serial_num, Username, Name, Password, Age, Mobno, MID);
+                     serial_num++;
+                     rowIndex++;
+                 } 
+            }
+                
+                if (ws == null)
+                {
+                    Console.WriteLine("worksheet cant be started...");
+                    return;
+                }
+            
+
+
+                    /****************Get user details**(append)********************/
+                     int count=2;
+                     string[] arr=new string[6];
+                     if (((Excel.Range)ws.Cells[2, 1]).Value2 != null)
+                     while ((wb.Sheets["sheet1"].Cells[count, 1]).Value2 != null)
+                    {
+                         count++;
+                    } 
+                    row = count;
+                    do
+                    {
+                        int n=1;
+                        Console.WriteLine("Enter username");
+                        arr[0] = Console.ReadLine();
+                       // ws.Cells[row, 1].Value2 = Console.ReadLine();
+                        Console.WriteLine("Enter name");
+                        arr[1] = Console.ReadLine();
+                      // ws.Cells[row, 2].Value2 = Console.ReadLine();
+                        Console.WriteLine("Enter password");
+                        arr[2] = Console.ReadLine();
+                       // ws.Cells[row, 3].Value2 = Console.ReadLine();
+                        Console.WriteLine("Enter age");
+                        arr[3] = Console.ReadLine();
+                      //  ws.Cells[row, 4].Value2 = Console.ReadLine();
+                        Console.WriteLine("Enter mobileno");
+                        arr[4] = Console.ReadLine();
+                      //  ws.Cells[row, 5].Value2 = Console.ReadLine();
+                        Console.WriteLine("Enter mId");
+                        arr[5] = Console.ReadLine();
+                      //  ws.Cells[row, 6].Value2 = Console.ReadLine();
+                        for (int m = 0; m < 6; m++)
+                        {
+                            ws.Cells[row, n].Value2 = arr[m];
+                            n++;
+                        }
+
+                        ws.Cells[row, 1].HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter;
+                        ws.Cells[row, 2].HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter;
+                        ws.Cells[row, 3].HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter;
+                        ws.Cells[row, 4].HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter;
+                        ws.Cells[row, 5].HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter;
+                        ws.Cells[row, 6].HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter;
+                        row++;
+                        Console.WriteLine((count-1) + " user added..\nPress 1 to add user or Press 2 to save...");
+                        count++;
+                        choice = Convert.ToInt32(Console.ReadLine());
+                        Console.Clear();
+                    } while (choice == 1);
+                    File.Delete(@"E:\Database.xlsx");
+                    wb.SaveAs(@"E:\Database.xlsx", Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, XlSaveAsAccessMode.xlExclusive, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing);
+                    //prac.ActiveWorkbook.Save();
+
+
+                    /****************Search and delete entry********************/
+                    Console.WriteLine("\nDelete? press 1...\nRestore? press 2...");
+                    int y = Convert.ToInt32(Console.ReadLine());
+                    
+                    int row1 = 2;
+                    if(y==1)
+                    {
+                        Console.WriteLine("Enter name to search");
+                        string searchName = Console.ReadLine();
+                        int ct = 0;
+                        for (int search = 1; search <= count; search++)
+                        {
+                            if (ws.Cells[row1, 1].Value2 == searchName)
+                            {
+                                ct++;
+                                Console.WriteLine("User Exists");
+                                Console.WriteLine("USER     Username, Name, Password, Age, Mobno, MID");
+                                for (int s = 1; s <= 6; s++)
+                                {
+
+                                    Console.Write(ws.Cells[row1, s].Value2 + "   ");
+                                }
+                                Console.WriteLine("\nPress 1 to delete account permanently...");
+                                int m = Convert.ToInt32(Console.ReadLine());
+                                if (m == 1)
+                                {
+                                    int x = 2;
+                                    bool found = true;
+                                    foreach (Excel.Worksheet sheet in wb.Sheets)
+                                    {
+                                        // Check the name of the current sheet
+                                        if (sheet.Name == "Deleted entries")
+                                        {
+                                            found = false;
+                                            break; // Exit the loop now
+                                        }
+                                    }
+                                    if (found)
+                                    {
+                                        Microsoft.Office.Interop.Excel.Worksheet ws2 =
+                                                   (Microsoft.Office.Interop.Excel.Worksheet)wb.Sheets.Add();
+                                        ws2.Name = "Deleted entries";
+
+
+                                        ws2.Cells[1, 1].Value2 = "Username";
+                                        ws2.Cells[1, 2].Value2 = "Name";
+                                        ws2.Cells[1, 3].Value2 = "Password";
+                                        ws2.Cells[1, 4].Value2 = "Age";
+                                        ws2.Cells[1, 5].Value2 = "Contact";
+                                        ws2.Cells[1, 6].Value2 = "MID";
+                                        ws2.get_Range("A1", "F1").Font.Bold = true;
+                                        ws2.get_Range("A2", "z100").Font.Italic = true;
+                                        ws2.get_Range("A1", "F1").HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter;
+                                        ws2.Cells[1, 1].ColumnWidth = 20;
+                                        ws2.Cells[1, 2].ColumnWidth = 20;
+                                        ws2.Cells[1, 3].ColumnWidth = 15;
+                                        ws2.Cells[1, 4].ColumnWidth = 5;
+                                        ws2.Cells[1, 5].ColumnWidth = 15;
+                                        ws2.Cells[1, 6].ColumnWidth = 5;
+                                        //ws2.Cells[1, 6].RowHeight = 25;
+                                        ws2.Rows.RowHeight = 20;
+                                    }
+
+                                    while ((wb.Sheets["Deleted entries"].Cells[x, 1]).Value2 != null)
+                                    {
+                                        x++;
+                                    }
+
+                                    Excel.Range from = ws.Rows[row1, Type.Missing];
+                                    Excel.Range to = wb.Sheets["Deleted entries"].Rows[x, Type.Missing];
+                                    from.Copy(to);
+
+                                    Excel.Range range;
+                                    // range = (Excel.Range)ws.Application.Rows[row1, Type.Missing];
+                                    range = wb.Sheets["sheet1"].Rows[row1, Type.Missing];
+                                    //range.Select();
+                                    range.Delete(Excel.XlDirection.xlUp);
+                                }
+                                else
+                                    prac.Quit();
+                                break;
+                            }
+                            row1++;
+                        }
+                        if (ct == 0)
+                            Console.WriteLine("User not found..");
+                        }
+                        else if (y == 2)
+                        {
+                            
+                            int index = 2, ct1 = 0,ct2=0;
+                            string Username;
+                            foreach (Excel.Worksheet sheet in wb.Sheets)
+                            {
+                                // Check the name of the current sheet
+                                if (sheet.Name == "Deleted entries")
+                                {
+                                    ct1++;
+                                    ((Excel.Worksheet)wb.Sheets["Deleted entries"]).Activate();
+                                    Excel.Worksheet workSheet = (Excel.Worksheet)wb.ActiveSheet;
+
+
+                                    while (((Excel.Range)wb.Sheets["Deleted entries"].Cells[index, 1]).Value2 != null)
+                                    {
+                                        Username = ((Excel.Range)wb.Sheets["Deleted entries"].Cells[index, 1]).Value2.ToString();
+                                        Console.WriteLine(Username);
+                                        index++;
+                                    }
+                                    Console.WriteLine("Enter name to search");
+                                    string searchName = Console.ReadLine();
+                                    index = 2;
+                                    while (((Excel.Range)wb.Sheets["Deleted entries"].Cells[index, 1]).Value2 != null)
+                                    {
+                                        Username = ((Excel.Range)wb.Sheets["Deleted entries"].Cells[index, 1]).Value2.ToString();
+                                        if (Username == searchName)
+                                        {
+                                            ct2++;
+                                            Console.WriteLine("Press 1 to recover account...");
+                                            int m = Convert.ToInt32(Console.ReadLine());
+                                            if (m == 1)
+                                            {
+                                                Excel.Range from = wb.Sheets["Deleted entries"].Rows[index, Type.Missing];
+                                                Excel.Range to = ws.Rows[row, Type.Missing];
+                                                from.Copy(to);
+
+                                                Excel.Range range;
+                                                // range = (Excel.Range)ws.Application.Rows[row, Type.Missing];
+                                                //range = wb.Sheets["Deleted entries"].Rows[index, Type.Missing];
+                                                //range.Select();
+                                                from.Delete(Excel.XlDirection.xlUp);
+                                               
+                                            }
+                                            break;
+                                        }
+
+                                        index++;
+                                    }
+                                    if (ct2 == 0)
+                                        Console.WriteLine("User not found to restore...");
+
+                                    }
+                                }
+                             if (ct1 == 0)
+                                Console.WriteLine("There is no previously deleted account to restore...");
+
+                            }
+                           
+                        
+                        else
+                            Console.WriteLine("Press valid key to delete or restore account...");
+
+                    Console.ReadLine();
+                           
+                           
+                            
+                            //wb.SaveAs(@"E:\Database.xlsx", Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, XlSaveAsAccessMode.xlExclusive, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing);
+                            prac.ActiveWorkbook.Save();
+                            //prac.Quit();
+                           // break;
+                       
+                      
+                       
+        }
+    }
+}
+
+
+
+

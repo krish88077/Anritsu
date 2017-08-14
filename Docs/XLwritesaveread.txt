@@ -1,0 +1,117 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Reflection;
+using Microsoft.Office.Interop.Excel;
+
+/**/
+using Excel = Microsoft.Office.Interop.Excel;
+using Microsoft.Office.Core;
+/**/
+
+
+
+namespace XLwritesaveread
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int choice,row=2,i=1;
+            Microsoft.Office.Interop.Excel.Application xlApp = new Microsoft.Office.Interop.Excel.Application();
+
+            if (xlApp == null)
+            {
+                Console.WriteLine("EXCEL could not be started. Check that your office installation and project references are correct.");
+                return;
+            }
+            xlApp.Visible = true;
+
+            Workbook wb = xlApp.Workbooks.Add(XlWBATemplate.xlWBATWorksheet);
+            Worksheet ws = (Worksheet)wb.Worksheets[1];
+
+            if (ws == null)
+            {
+                Console.WriteLine("Worksheet could not be created. Check that your office installation and project references are correct.");
+            }
+           
+                ws.Cells[1,1].Value2= "Username";
+                ws.Cells[1, 2].Value2 = "Name";
+                ws.Cells[1, 3].Value2 = "Password";
+                ws.Cells[1, 4].Value2 = "Age";
+                ws.Cells[1, 5].Value2 = "Contact";
+                ws.Cells[1, 6].Value2 = "MID";
+
+                do
+                {
+                Console.WriteLine("Enter username");
+                ws.Cells[row,1].Value2 = Console.ReadLine();
+                Console.WriteLine("Enter name");
+                ws.Cells[row,2].Value2 = Console.ReadLine();
+                Console.WriteLine("Enter password");
+                ws.Cells[row,3].Value2 = Console.ReadLine();
+                Console.WriteLine("Enter age");
+                ws.Cells[row,4].Value2 = Console.ReadLine();
+                Console.WriteLine("Enter mobileno");
+                ws.Cells[row,5].Value2 = Console.ReadLine();
+                Console.WriteLine("Enter mId");
+                ws.Cells[row,6].Value2 = Console.ReadLine();
+                row++;
+                Console.WriteLine(i+" user added..\nPress 1 to add user or Press 2 to save...");
+                i++;
+                choice = Convert.ToInt32(Console.ReadLine());
+                Console.Clear();
+            } while (choice == 1);
+
+                wb.SaveAs(@"E:\try.xlsx", Type.Missing, Type.Missing,
+                Type.Missing, Type.Missing, Type.Missing, XlSaveAsAccessMode.xlExclusive,
+                Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing);
+
+
+            /******************************/
+
+                string Path = @"E:\try.xlsx";
+                Excel.Application app = new Application();
+                Excel.Workbook workBook = app.Workbooks.Open(Path, 0, true, 5, "", "", true, Excel.XlPlatform.xlWindows, "\t", false, false, 0, true, 1, 0);
+                Excel.Worksheet workSheet = (Excel.Worksheet)workBook.ActiveSheet;
+
+
+                int index = 1;
+                object rowIndex = 1;
+                object colIndex1 = 1;
+                object colIndex2 = 2;
+                object colIndex3 = 3;
+                object colIndex4 = 4;
+                object colIndex5 = 5;
+                object colIndex6 = 6;
+
+                try
+                {
+                    Console.WriteLine("         Username, Name, Password, Age, Mobno, MID");
+                    while (((Excel.Range)workSheet.Cells[rowIndex, colIndex1]).Value2 != null)
+                    {
+                        string Username = ((Excel.Range)workSheet.Cells[rowIndex, colIndex1]).Value2.ToString();
+                        string Name = ((Excel.Range)workSheet.Cells[rowIndex, colIndex2]).Value2.ToString();
+                        string Password = ((Excel.Range)workSheet.Cells[rowIndex, colIndex3]).Value2.ToString();
+                        string Age = ((Excel.Range)workSheet.Cells[rowIndex, colIndex4]).Value2.ToString();
+                        string Mobno = ((Excel.Range)workSheet.Cells[rowIndex, colIndex5]).Value2.ToString();
+                        string MID = ((Excel.Range)workSheet.Cells[rowIndex, colIndex6]).Value2.ToString();
+
+                        Console.WriteLine(" {0} : {1}  ,{2}  ,{3}  ,{4}  ,{5}, {6} ", index, Username, Name, Password, Age, Mobno, MID);
+                        index++;
+                        rowIndex = index;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    app.Quit();
+                    Console.WriteLine(ex.Message);
+                }
+                Console.ReadLine();
+
+            /******************************/
+
+        }
+    }
+}

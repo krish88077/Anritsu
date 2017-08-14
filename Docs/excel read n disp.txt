@@ -1,0 +1,55 @@
+using System;
+using Excel = Microsoft.Office.Interop.Excel;
+using Microsoft.Office.Core;
+using Microsoft.Office.Interop.Excel;
+
+namespace @try
+{
+    class ReadExcelApplication
+    {
+        [STAThread]
+        static void Main(string[] args)
+        {
+            string Path = @"e:\test.xls";
+            Excel.ApplicationClass app = new ApplicationClass();
+            Excel.Workbook workBook = app.Workbooks.Open(Path, 0, true, 5, "", "", true, Excel.XlPlatform.xlWindows, "\t", false, false, 0, true, 1, 0);
+            Excel.Worksheet workSheet = (Excel.Worksheet)workBook.ActiveSheet;
+
+            
+            int index = 1;
+            object rowIndex = 1;
+            object colIndex1 = 1;
+            object colIndex2 = 2;
+            object colIndex3 = 3;
+            object colIndex4 = 4;
+            object colIndex5 = 5;
+            object colIndex6 = 6;
+
+
+            try
+            {
+                Console.WriteLine("         Username, Name, Password, Age, Mobno, MID");
+                while (((Excel.Range)workSheet.Cells[rowIndex, colIndex1]).Value2 != null)
+                {
+                    string Username = ((Excel.Range)workSheet.Cells[rowIndex, colIndex1]).Value2.ToString();
+                    string Name = ((Excel.Range)workSheet.Cells[rowIndex, colIndex2]).Value2.ToString();
+                    string Password = ((Excel.Range)workSheet.Cells[rowIndex, colIndex3]).Value2.ToString();
+                    string Age = ((Excel.Range)workSheet.Cells[rowIndex, colIndex4]).Value2.ToString();
+                    string Mobno = ((Excel.Range)workSheet.Cells[rowIndex, colIndex5]).Value2.ToString();
+                    string MID = ((Excel.Range)workSheet.Cells[rowIndex, colIndex6]).Value2.ToString();
+
+                    Console.WriteLine(" {0} : {1}  ,{2}  ,{3}  ,{4}  ,{5}, {6} ", index, Username, Name, Password, Age, Mobno, MID);
+                    index++;
+                    rowIndex = index;
+                }
+            }
+            catch (Exception ex)
+            {
+                app.Quit();
+                Console.WriteLine(ex.Message);
+            }
+            Console.ReadLine();
+        }
+
+    }
+}

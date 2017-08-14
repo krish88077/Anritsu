@@ -1,0 +1,91 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
+
+
+namespace Workon_layouts
+{
+    /// <summary>
+    /// Interaction logic for RTD.xaml
+    /// </summary>
+    public partial class RTD : Window
+    {
+        string text;
+        public RTD()
+        {
+            InitializeComponent();
+            comboBox1.Items.Clear();
+            comboBox1.Items.Add("Search");
+            comboBox1.Items.Add("Filter");
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+          
+        }
+
+        private void Window_StateChanged(object sender, EventArgs e)
+        {
+            //if (this.WindowState == System.Windows.WindowState.Maximized)
+            //{
+            //    this.WindowState = System.Windows.WindowState.Normal;
+            //}
+        }
+
+        private void comboBox1_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (comboBox1.SelectedIndex == 0)
+            {
+                System.Windows.Controls.TextBox t = new TextBox();
+                t.Name = "txtbox1";
+                t.VerticalAlignment = System.Windows.VerticalAlignment.Top;
+                Logonsrch_grid.Children.Add(t);
+                Grid.SetColumn(t, 0);
+                Grid.SetRow(t, 2);
+                t.TextChanged += new TextChangedEventHandler(t_TextChanged);
+
+
+
+
+                System.Windows.Controls.Button b = new Button();
+                b.Content = "Search";
+                b.VerticalAlignment = System.Windows.VerticalAlignment.Bottom;
+                Logonsrch_grid.Children.Add(b);
+                Grid.SetColumn(b, 0);
+                Grid.SetRow(b, 2);
+                b.Click += new RoutedEventHandler(b_Click);
+            }
+            else
+            {
+                System.Windows.Controls.ListBox lb = new ListBox();
+                lb.Items.Add("Component Name");
+                lb.Items.Add("RTD Patch series");
+                lb.Items.Add("RTD Version");
+                lb.VerticalAlignment = System.Windows.VerticalAlignment.Bottom;
+                Logonsrch_grid.Children.Add(lb);
+                Grid.SetColumn(lb, 0);
+                Grid.SetRow(lb, 2);
+            }
+        }
+
+        string yourText = string.Empty;
+        private void t_TextChanged(object sender, EventArgs e)
+        {
+            yourText = (sender as TextBox).Text;
+        }
+
+        private void b_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show(yourText);
+        }
+    }
+}

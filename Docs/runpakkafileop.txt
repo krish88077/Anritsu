@@ -1,0 +1,73 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.IO;
+
+namespace CSfileop
+{
+
+    public class operations
+    {
+        public void writee()
+        {
+            using (StreamWriter sw = new StreamWriter("E:/CSTrys/ex.txt"))
+            {
+                Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                string a, b;
+                a = Console.ReadLine();
+                b = Console.ReadLine();
+                dictionary.Add(a, b);
+
+                foreach (KeyValuePair<string, string> kv in dictionary)
+                {
+                    sw.WriteLine(kv.Key + " " + kv.Value);
+                }
+            }
+        }
+
+
+        public void readd()
+        {
+            string line = "";
+            using (StreamReader sr = new StreamReader("E:/CSTrys/ex.txt"))
+            {
+                while ((line = sr.ReadLine()) != null)
+                {
+                    Console.WriteLine(line);
+                }
+            }
+
+        }
+    }
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+
+            int x;
+            operations obj = new operations();
+            Console.WriteLine("Press 1 to write and 2 to read");
+            x = Convert.ToInt32(Console.ReadLine());
+            switch (x)
+            {
+                case 1:
+                    obj.writee();
+                    break;
+
+                case 2:
+                    obj.readd();
+                    break;
+
+                default:
+                    Console.WriteLine("Invalid Key");
+                    break;
+            }
+            Console.ReadLine();
+        }
+    }
+}
+
+            
+        
