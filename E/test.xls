@@ -1,0 +1,12 @@
+t.Columns.Add("ID" typeof(int));
+            t.Columns.Add("First name"  typeof(string));
+            t.Columns.Add("Last name"  typeof(string));
+            t.Columns.Add("Age"  typeof(int));
+
+            t.Rows.Add(1  "fA" "lA" 10);
+            t.Rows.Add(2  "fB"  "lB"  20);
+            t.Rows.Add(3  "fC"  "lC"  30);
+            t.Rows.Add(4  "fD"  "lD"  40);
+            t.Rows.Add(5  "fE"  "lE"  50);
+
+            dataGrid3.DataContext = t;
