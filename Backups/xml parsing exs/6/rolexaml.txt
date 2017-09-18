@@ -1,0 +1,20 @@
+<Window x:Class="GRAD.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MainWindow" Height="350" Width="525" >
+
+    <StackPanel>
+        <DataGrid Name="MyDataGrid" AutoGenerateColumns="False" ItemsSource="{Binding Path=Elements[Role]}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Path=Attribute[Name].Value}" Header="Name" />
+                <DataGridTextColumn Binding="{Binding Path=Attribute[Info].Value}" Header="Info"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+
+
+
+    </StackPanel>
+
+
+</Window>

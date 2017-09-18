@@ -1,0 +1,14 @@
+<Window x:Class="GRAD.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MainWindow" Height="350" Width="525" >
+
+    <Window.Resources>
+        <XmlDataProvider x:Key="XmlData" Source="E:\xml parsing exs\6\HousingShapes.xml" XPath="HousingShape" />
+    </Window.Resources>
+    
+    <StackPanel>
+        <ComboBox ItemsSource="{Binding Source={StaticResource XmlData}, XPath=./Shape}" DisplayMemberPath="@Name" />
+        <ComboBox ItemsSource="{Binding Source={StaticResource XmlData}, XPath=./Size}" DisplayMemberPath="@Val" />
+    </StackPanel>
+</Window>

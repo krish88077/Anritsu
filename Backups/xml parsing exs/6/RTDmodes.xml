@@ -1,0 +1,30 @@
+<Userdetails>
+    <User id="1">
+        <Name>Vivek</Name>
+        <Perm Write="true"/>
+        <Mode FCntrl="true"/>
+        <FCtrlsql qry="*"/>
+		<RCtrlsql qry="Patch_name,Customer,status,Brief_description"/>
+    </User>
+	<User id="2">
+        <Name>Chitha</Name>
+        <Perm Write="false"/>
+        <Mode FCntrl="true"/>
+        <FCtrlsql qry="*"/>
+		<RCtrlsql qry="Patch_name,Customer,status,Brief_description"/>
+    </User>
+    <User id="3">
+        <Name>Syaam Krishna S</Name>
+        <Perm Write="true"/>
+        <Mode FCntrl="true"/>
+        <FCtrlsql qry="*"/>
+		<RCtrlsql qry="Patch_name,Brief_description,RTD_version,Owner,Status,Bug_Feature_or_both"/>
+    </User>
+    <User id="4">
+        <Name>Kani</Name>
+        <Perm Write="true"/>
+        <Mode FCntrl="true"/>
+        <FCtrlsql qry="*"/>
+		<RCtrlsql qry="Patch_name,status,Brief_description"/>
+    </User>
+</Userdetails>

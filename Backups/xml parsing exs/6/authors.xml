@@ -1,0 +1,12 @@
+<Data>
+ <Book>
+ <Author>John Doe</Author>
+ <Title>Straight Track Demo</Title>
+ <Version>1</Version>  
+ </Book>
+ <Book>
+ <Author>John </Author>
+ <Title>Straight Demo</Title>
+ <Version>2</Version>  
+ </Book>
+</Data>

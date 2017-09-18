@@ -1,0 +1,19 @@
+<root>
+    <resultset>
+        <header>
+            <column> Col 1 </column>
+            <column> Col 2 </column>
+        </header>
+
+        <data>
+            <row>
+               <field>Value field 1</field>
+               <field>Value field 2</field>
+            </row>
+            <row>
+               <field>Value field 1</field>
+               <field>Value field 2</field>
+            </row>
+        </data>
+    </resultset>
+</root>

@@ -1,0 +1,30 @@
+<Userdetails>
+	<User>
+		<Name>V</Name>
+		<Perm name="ss" Read="true" Write="true"/>
+		<Mode FCntrl="true" RCntrl="false"/>
+		<FCtrlsql qry="*"/>
+		<RCtrlsql qry="Patch_name,Customer,status,Brief_description">
+	</User>
+	<User>
+		<Name>C</Name>
+		<Perm Read="true" Write="true"/>
+		<Mode FCntrl="true" RCntrl="true"/>
+<FCtrlsql qry="*"/>
+		<RCtrlsql qry="Patch_name,Customer,status,Brief_description">
+	</User>
+	<User>
+		<Name>Syaam Krishna S</Name>
+		<Perm Read="true" Write="true"/>
+		<Mode FCntrl="true" RCntrl="false"/>
+<FCtrlsql qry="*"/>
+		<RCtrlsql qry="Patch_name,Customer,status,Brief_description">
+	</User>
+	<User>
+		<Name>Kanimozhi E</Name>
+		<Perm Read="true" Write="true"/>
+		<Mode FCntrl="false" RCntrl="true"/>
+<FCtrlsql qry="*"/>
+		<RCtrlsql qry="Patch_name,Customer,status,Brief_description">
+	</User>	
+</Userdetails>

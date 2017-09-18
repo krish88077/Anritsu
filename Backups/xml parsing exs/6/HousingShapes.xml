@@ -1,0 +1,10 @@
+<HousingShape>
+ <Shape Name="Rectangular" />
+ <Size Val= "10"/>
+ <Shape Name="Circular" />
+ <Size Val= "20"/>
+ <Shape Name="Triangular" />
+ <Size Val= "30"/>
+ <Shape Name="Other Shape" />
+ <Size Val= "40"/>
+</HousingShape>

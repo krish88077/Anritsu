@@ -1,0 +1,6 @@
+<Permissions>
+	<User Name="C" Read="true"	Write="true"/>
+	<User Name="Syaam Krishna S" Read="true"	 Write="false" sql="Patch_name,Customer,status,Brief_description"/>
+	<User Name="K" Read="false"	Write="true"/>
+	<User Name="V" Read="false" Write="false"/>
+</Permissions>

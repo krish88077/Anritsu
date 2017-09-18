@@ -1,0 +1,67 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
+using System.Data;
+using System.Xml;
+
+using System.Xml.Linq;
+using System.Security.Principal;
+
+namespace GRAD
+{
+    /// <summary>
+    /// Interaction logic for MainWindow.xaml
+    /// </summary>
+    public partial class MainWindow : Window
+    {
+        public MainWindow()
+        {
+            InitializeComponent();
+            //@"E:\\xml parsing exs\\5\\mymusic.xml"
+
+
+            string h = WindowsIdentity.GetCurrent().Name;
+            string[] strArr = h.Split('\\');
+            string sub = strArr[1];
+            namelbl.Content = sub;
+
+
+            XmlDocument xmldoc = new XmlDocument();
+            xmldoc.Load("E:\\xml parsing exs\\6\\Rtd.xml");
+           
+            //single node
+            XmlNode node1 = xmldoc.SelectSingleNode("/Permissions/User[@Write='true'][@Read='true']");
+            textBox1.Text = node1.Attributes["Name"].InnerText;
+
+            //multiple nodes
+            XmlNodeList node2 = xmldoc.SelectNodes("/Permissions/User[@Write='true'][@Read='true']");
+            foreach (XmlNode xn in node2)
+            {
+                comboBox11.Items.Add(xn.Attributes["Name"].InnerText);
+            }
+
+            XmlNode node3 = xmldoc.SelectSingleNode("/Permissions/User[@Name='"+sub+"']");
+            writelbl.Content = node3.Attributes["Write"].InnerText;
+            readlbl.Content = node3.Attributes["Read"].InnerText;
+
+            if (node3.Attributes["Read"].InnerText == "true")
+            {
+                qryblk.Text = "Patch_name,Customer,status,Brief_description";
+            }
+            else
+                qryblk.Text = "";
+        }
+
+        
+    }
+}
